@@ -1,12 +1,12 @@
 import { Plugin, Workspace } from 'obsidian'
 import { around } from 'monkey-around'
 
-const ogOpen = Workspace.prototype.openLinkText
+let uninstallPatchOpen: () => void
 
 export default class AutoUpdatedDatePlugin extends Plugin {
   async onload(): Promise<void> {
     // Monkey-patch Obsidian
-    const patchOpen = around(Workspace.prototype, {
+    uninstallPatchOpen = around(Workspace.prototype, {
       openLinkText(oldOpenLinkText) {
         return function (...args) {
           const name = args[0] + '.md'
@@ -30,6 +30,6 @@ export default class AutoUpdatedDatePlugin extends Plugin {
   }
 
   onunload(): void {
-    Workspace.prototype.openLinkText = ogOpen
+    uninstallPatchOpen()
   }
 }

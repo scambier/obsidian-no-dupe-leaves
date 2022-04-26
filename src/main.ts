@@ -1,7 +1,6 @@
 import { Plugin, Workspace } from 'obsidian'
 import { around } from 'monkey-around'
 
-// const ogSave = TextFileView.prototype.save
 const ogOpen = Workspace.prototype.openLinkText
 
 export default class AutoUpdatedDatePlugin extends Plugin {

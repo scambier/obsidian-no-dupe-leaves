@@ -1,6 +1,6 @@
 {
   "name": "scambier.obsidian-no-dupe-leaves",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Don't reopen notes that are already open",
   "main": "dist/main.js",
   "scripts": {

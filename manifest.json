@@ -1,7 +1,7 @@
 {
 	"id": "scambier.obsidian-no-dupe-leaves",
 	"name": "No dupe leaves",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"minAppVersion": "0.14.2",
 	"description": "Don't reopen notes that are already open",
 	"author": "Simon Cambier",

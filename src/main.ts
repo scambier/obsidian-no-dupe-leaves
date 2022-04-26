@@ -3,7 +3,7 @@ import { around } from 'monkey-around'
 
 let uninstallPatchOpen: () => void
 
-export default class AutoUpdatedDatePlugin extends Plugin {
+export default class NoDupeLeavesPlugin extends Plugin {
   async onload(): Promise<void> {
     // Monkey-patch Obsidian
     uninstallPatchOpen = around(Workspace.prototype, {

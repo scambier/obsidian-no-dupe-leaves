@@ -1,4 +1,4 @@
-import { Plugin, Workspace } from 'obsidian'
+import { OpenViewState, Plugin, Workspace } from 'obsidian'
 import { around } from 'monkey-around'
 
 let uninstallPatchOpen: () => void
@@ -8,8 +8,24 @@ export default class NoDupeLeavesPlugin extends Plugin {
     // Monkey-patch Obsidian
     uninstallPatchOpen = around(Workspace.prototype, {
       openLinkText(oldOpenLinkText) {
-        return function (...args) {
-          const name = args[0] + '.md'
+        return function (
+          linktext: string,
+          sourcePath: string,
+          newLeaf?: boolean,
+          openViewState?: OpenViewState,
+        ) {
+          if (newLeaf) {
+            return (
+              oldOpenLinkText &&
+              oldOpenLinkText.apply(this, [
+                linktext,
+                sourcePath,
+                newLeaf,
+                openViewState,
+              ])
+            )
+          }
+          const name = linktext + linktext.endsWith('.md') ? '' : '.md'
           let result
           app.workspace.iterateAllLeaves(leaf => {
             const viewState = leaf.getViewState()
@@ -21,7 +37,14 @@ export default class NoDupeLeavesPlugin extends Plugin {
             }
           })
           if (!result) {
-            result = oldOpenLinkText && oldOpenLinkText.apply(this, args)
+            result =
+              oldOpenLinkText &&
+              oldOpenLinkText.apply(this, [
+                linktext,
+                sourcePath,
+                newLeaf,
+                openViewState,
+              ])
           }
           return result
         }

@@ -25,7 +25,7 @@ export default class NoDupeLeavesPlugin extends Plugin {
               ])
             )
           }
-          const name = linktext + linktext.endsWith('.md') ? '' : '.md'
+          const name = linktext + (linktext.endsWith('.md') ? '' : '.md')
           let result
           app.workspace.iterateAllLeaves(leaf => {
             const viewState = leaf.getViewState()

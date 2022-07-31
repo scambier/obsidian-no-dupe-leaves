@@ -6,5 +6,5 @@
 	"description": "Don't reopen notes that are already open",
 	"author": "Simon Cambier",
 	"authorUrl": "",
-	"isDesktopOnly": false
+	"isDesktopOnly": true
 }

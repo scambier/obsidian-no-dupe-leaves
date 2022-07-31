@@ -14,4 +14,4 @@ This plugin will avoid opening duplicates when possible, while still respecting 
 
 ## Contributing
 
-As this is a quick hack over the default behavior, I don't plan to work any further on it.
+As this is a quick hack over the default behavior, no feature request will be considered. You can submit PRs for bugfixes.

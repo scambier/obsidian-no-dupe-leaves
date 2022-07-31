@@ -6,7 +6,7 @@ on:
       - "*"
 
 env:
-  PLUGIN_NAME: scambier.obsidian-no-dupe-leaves
+  PLUGIN_NAME: no-dupe-leaves
   DIST_FOLDER: ./dist
 
 jobs:

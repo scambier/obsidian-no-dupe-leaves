@@ -1,14 +1,17 @@
 # Obsidian "No Dupe Leaves" plugin
 
-> Let's say I have 2 open notes, _A_ and _B_.  
-> _A_ has a link to _B_.  
-> If I click on `[[B]]` from _A_, Obsidian will re-open _B_. Is there a way to just show the note if it's already open?
+Obsidian's default behavior is to replace the old note `A` with the new note `B` when you open it,
+_even if `B` is already open in another pane_, leading you to have 2 instances of `B`.
 
-Well, there it is.
+This plugin will avoid opening duplicates when possible, while still respecting all "force open in a new pane" instructions (e.g. middle click on a link).
+
+⚠️ **Word of warning** ⚠️ This plugin will globally affect Obsidian's behavior, even for 3rd party plugins.
+
+---
 
 ![](./images/nodupes.gif)
 
-**!! This plugin is a quick hack for something that should be a feature !!**
 
-It was made in 20 minutes, it's probably buggy, but it looks like it works.
+## Contributing
 
+As this is a quick hack over the default behavior, I don't plan to work any further on it.

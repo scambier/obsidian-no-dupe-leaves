@@ -1,5 +1,7 @@
 # Obsidian "No Dupe Leaves" plugin
 
+> Automatically switch the focus to open notes instead of reopening them
+
 [The discussion that led to this plugin's creation](https://forum.obsidian.md/t/dont-reopen-notes-that-are-already-open-just-put-the-focus-on-them/36488/3).
 
 Obsidian's default behavior is to replace the old note `A` with the new note `B` when you open it,

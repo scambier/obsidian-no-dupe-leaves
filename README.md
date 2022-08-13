@@ -1,4 +1,6 @@
-# Obsidian "No Dupe Leaves" plugin
+# Obsidian "No Dupe Leaves" Plugin
+
+![Custom badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fscambier.xyz%2Fobsidian-endpoints%2Fno-dupe-leaves.json)
 
 > Automatically switch the focus to open notes instead of reopening them
 

@@ -15,7 +15,7 @@ This plugin will avoid opening duplicates when possible, while still respecting 
 
 ---
 
-![](./images/nodupes.gif)
+![](https://raw.githubusercontent.com/scambier/obsidian-no-dupe-leaves/master/images/nodupes.gif)
 
 
 ## Contributing

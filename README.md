@@ -11,7 +11,13 @@ _even if `B` is already open in another pane_, leading you to have 2 instances o
 
 This plugin will avoid opening duplicates when possible, while still respecting all "force open in a new pane" instructions (e.g. middle click on a link).
 
-⚠️ **Word of warning** ⚠️ This plugin will globally affect Obsidian's behavior, even for 3rd party plugins.
+---
+
+⚠️ **Word of warning** ⚠️ This plugin modifies the default behavior of Obsidian.
+
+Internally, it overwrites the public function `openLinkText()`, which is called when you click on a link in a note. This also affects other plugins that use this funtion - like Omnisearch -, but does not work on core features like the File Explorer.
+
+Add your input the the [original feature request](https://forum.obsidian.md/t/dont-reopen-notes-that-are-already-open-just-put-the-focus-on-them/36488/3) to tell Obsidian that you'd like this behavior as the default :)
 
 ---
 

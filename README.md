@@ -15,13 +15,15 @@ This plugin will avoid opening duplicates when possible, while still respecting 
 
 ⚠️ **Word of warning** ⚠️ This plugin modifies the default behavior of Obsidian.
 
-Internally, it overwrites the public function `openLinkText()`, which is called when you click on a link in a note. This also affects other plugins that use this funtion - like Omnisearch -, but does not work on core features like the File Explorer.
+Internally, it overwrites the public function `openLinkText()`, which is called when you click on a link in a note. This also affects other plugins that use this function - like Omnisearch -, but does not work on core features like the File Explorer.
 
 Add your input the the [original feature request](https://forum.obsidian.md/t/dont-reopen-notes-that-are-already-open-just-put-the-focus-on-them/36488/3) to tell Obsidian that you'd like this behavior as the default :)
 
 ---
 
 ![](https://raw.githubusercontent.com/scambier/obsidian-no-dupe-leaves/master/images/nodupes.gif)
+
+![image](https://user-images.githubusercontent.com/3216752/187726977-27d3cadf-7765-4c92-864a-434fe6f4e43f.png)
 
 
 ## Contributing

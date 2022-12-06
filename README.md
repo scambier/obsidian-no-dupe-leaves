@@ -21,9 +21,9 @@ Add your input the the [original feature request](https://forum.obsidian.md/t/do
 
 ---
 
-![](https://raw.githubusercontent.com/scambier/obsidian-no-dupe-leaves/master/images/nodupes.gif)
+![image](https://user-images.githubusercontent.com/3216752/206014202-16e23b60-979f-4680-aae3-66054d2f82d7.png)
 
-![image](https://user-images.githubusercontent.com/3216752/187726977-27d3cadf-7765-4c92-864a-434fe6f4e43f.png)
+![](https://raw.githubusercontent.com/scambier/obsidian-no-dupe-leaves/master/images/nodupes.gif)
 
 
 ## Contributing

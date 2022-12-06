@@ -6,15 +6,13 @@ let uninstallPatchOpen: () => void
 export default class NoDupeLeavesPlugin extends Plugin {
   async onload(): Promise<void> {
     uninstallPatchOpen = around(Workspace.prototype, {
-      
-      
       // Monkey-patch the OpenLinkText function
       openLinkText(oldOpenLinkText) {
         return function (
           linktext: string,
           sourcePath: string,
           newLeaf?: boolean,
-          openViewState?: OpenViewState,
+          openViewState?: OpenViewState
         ) {
           // If the `newLeaf` parameter is true, respect the default behavior and exit here
           if (newLeaf) {
@@ -28,9 +26,10 @@ export default class NoDupeLeavesPlugin extends Plugin {
               ])
             )
           }
+
           // Make sure that the path ends with '.md'
           const name = linktext + (linktext.endsWith('.md') ? '' : '.md')
-          let result
+          let result = false
           // Check all open panes for a matching path
           app.workspace.iterateAllLeaves(leaf => {
             const viewState = leaf.getViewState()
@@ -39,7 +38,8 @@ export default class NoDupeLeavesPlugin extends Plugin {
               viewState.state?.file?.endsWith(name)
             ) {
               // Found a corresponding pane
-              result = app.workspace.setActiveLeaf(leaf)
+              app.workspace.setActiveLeaf(leaf)
+              result = true
             }
           })
           // If no pane matches the path, call the original function

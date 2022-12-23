@@ -4,7 +4,7 @@
 
 > Automatically switch the focus to open notes instead of reopening them
 
-[The discussion that led to this plugin's creation](https://forum.obsidian.md/t/dont-reopen-notes-that-are-already-open-just-put-the-focus-on-them/36488/3).
+[The discussion that led to this plugin's creation](https://forum.obsidian.md/t/ide-style-navigation-tab-reuse-on-link-opening-tab-management/46671/2).
 
 Obsidian's default behavior is to replace the old note `A` with the new note `B` when you open it,
 _even if `B` is already open in another pane_, leading you to have 2 instances of `B`.
@@ -17,7 +17,7 @@ This plugin will avoid opening duplicates when possible, while still respecting 
 
 Internally, it overwrites the public function `openLinkText()`, which is called when you click on a link in a note. This also affects other plugins that use this function - like Omnisearch -, but does not work on core features like the File Explorer.
 
-Add your input the the [original feature request](https://forum.obsidian.md/t/dont-reopen-notes-that-are-already-open-just-put-the-focus-on-them/36488/3) to tell Obsidian that you'd like this behavior as the default :)
+Add your input the the [original feature request](https://forum.obsidian.md/t/ide-style-navigation-tab-reuse-on-link-opening-tab-management/46671/2) to tell Obsidian that you'd like this behavior as the default :)
 
 ---
 

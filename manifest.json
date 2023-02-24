@@ -1,7 +1,7 @@
 {
 	"id": "no-dupe-leaves",
 	"name": "No dupe leaves",
-	"version": "0.0.5",
+	"version": "0.0.8",
 	"minAppVersion": "0.14.2",
 	"description": "Don't reopen notes that are already open",
 	"author": "Simon Cambier",

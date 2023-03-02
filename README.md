@@ -17,7 +17,7 @@ This plugin will avoid opening duplicates when possible, while still respecting 
 
 Internally, it overwrites the public function `openLinkText()`, which is called when you click on a link in a note. This also affects other plugins that use this function - like Omnisearch -, but does not work on core features like the File Explorer.
 
-Add your input the the [original feature request](https://forum.obsidian.md/t/ide-style-navigation-tab-reuse-on-link-opening-tab-management/46671/2) to tell Obsidian that you'd like this behavior as the default :)
+Add your input the the [original feature request](https://forum.obsidian.md/t/ide-style-navigation-tab-reuse-on-link-opening-tab-management/46671) to tell Obsidian that you'd like this behavior as the default :)
 
 ---
 

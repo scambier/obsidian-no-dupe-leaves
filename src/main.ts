@@ -1,4 +1,10 @@
-import { MarkdownView, OpenViewState, Plugin, Workspace } from 'obsidian'
+import {
+  MarkdownView,
+  OpenViewState,
+  PaneType,
+  Plugin,
+  Workspace,
+} from 'obsidian'
 import { around } from 'monkey-around'
 
 let uninstallPatchOpen: () => void
@@ -11,7 +17,7 @@ export default class NoDupeLeavesPlugin extends Plugin {
         return function (
           linktext: string,
           sourcePath: string,
-          newLeaf?: boolean,
+          newLeaf?: PaneType | boolean,
           openViewState?: OpenViewState
         ) {
           // If the `newLeaf` parameter is true, respect the default behavior and exit here
@@ -36,10 +42,10 @@ export default class NoDupeLeavesPlugin extends Plugin {
             const viewState = leaf.getViewState()
             if (
               viewState.type === 'markdown' &&
-              viewState.state?.file?.endsWith(sanitizedPath.name)
+              viewState.state?.file === sanitizedPath.name
             ) {
               // Found a corresponding pane
-              app.workspace.setActiveLeaf(leaf)
+              app.workspace.setActiveLeaf(leaf, { focus: true })
               result = true
             }
           })

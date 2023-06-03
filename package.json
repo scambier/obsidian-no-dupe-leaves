@@ -1,6 +1,6 @@
 {
   "name": "no-dupe-leaves",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Don't reopen notes that are already open",
   "main": "dist/main.js",
   "scripts": {

@@ -4,6 +4,7 @@ import {
   PaneType,
   Plugin,
   Workspace,
+  getLinkpath,
 } from 'obsidian'
 import { around } from 'monkey-around'
 
@@ -34,7 +35,7 @@ export default class NoDupeLeavesPlugin extends Plugin {
           }
 
           // Make sure that the path ends with '.md'
-          const sanitizedPath = sanitizePath(linktext)
+          const parts = getLinkParts(linktext)
 
           let result = false
           // Check all open panes for a matching path
@@ -42,7 +43,7 @@ export default class NoDupeLeavesPlugin extends Plugin {
             const viewState = leaf.getViewState()
             if (
               viewState.type === 'markdown' &&
-              viewState.state?.file === sanitizedPath.name
+              viewState.state?.file === parts.path
             ) {
               // Found a corresponding pane
               app.workspace.setActiveLeaf(leaf, { focus: true })
@@ -60,7 +61,7 @@ export default class NoDupeLeavesPlugin extends Plugin {
                 openViewState,
               ])
           }
-          scrollToPosition(sanitizedPath)
+          scrollToPosition(parts)
           return result
         }
       },
@@ -77,11 +78,11 @@ export default class NoDupeLeavesPlugin extends Plugin {
  * @param sanitizedPath
  */
 function scrollToPosition(sanitizedPath: {
-  name: string
+  path: string
   heading?: string
   block?: string
 }) {
-  const cache = app.metadataCache.getCache(sanitizedPath.name)
+  const cache = app.metadataCache.getCache(sanitizedPath.path)
   const view = app.workspace.getActiveViewOfType(MarkdownView)
 
   // Get the corresponding position for the heading/block
@@ -100,8 +101,8 @@ function scrollToPosition(sanitizedPath: {
   }
 }
 
-function sanitizePath(path: string): {
-  name: string
+function getLinkParts(path: string): {
+  path: string
   heading?: string
   block?: string
 } {
@@ -118,6 +119,12 @@ function sanitizePath(path: string): {
   path = path.replace(/(#.*)$/, '')
 
   // Make sure that the path ends with '.md'
-  const name = path + (path.endsWith('.md') ? '' : '.md')
-  return { name, heading, block }
+  return {
+    path: app.metadataCache.getFirstLinkpathDest(
+      getLinkpath(path),
+      app.workspace.getActiveFile()?.path
+    ).path,
+    heading,
+    block,
+  }
 }

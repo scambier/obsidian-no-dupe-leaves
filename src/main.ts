@@ -34,7 +34,7 @@ export default class NoDupeLeavesPlugin extends Plugin {
             )
           }
 
-          // Make sure that the path ends with '.md'
+          // Gets the path and heading/block from the linktext
           const parts = getLinkParts(linktext)
 
           let result = false
@@ -75,26 +75,26 @@ export default class NoDupeLeavesPlugin extends Plugin {
 
 /**
  * Set the cursor to the heading/block
- * @param sanitizedPath
+ * @param parts
  */
-function scrollToPosition(sanitizedPath: {
+function scrollToPosition(parts: {
   path: string
   heading?: string
   block?: string
 }) {
-  const cache = app.metadataCache.getCache(sanitizedPath.path)
+  const cache = app.metadataCache.getCache(parts.path)
   const view = app.workspace.getActiveViewOfType(MarkdownView)
 
   // Get the corresponding position for the heading/block
-  if (sanitizedPath.heading) {
+  if (parts.heading) {
     const heading = cache.headings.find(
-      heading => heading.heading === sanitizedPath.heading
+      heading => heading.heading === parts.heading
     )
     if (heading) {
       view.editor.setCursor(heading.position.start.line)
     }
-  } else if (sanitizedPath.block) {
-    const block = cache.blocks[sanitizedPath.block]
+  } else if (parts.block) {
+    const block = cache.blocks[parts.block]
     if (block) {
       view.editor.setCursor(block.position.start.line)
     }
@@ -118,7 +118,6 @@ function getLinkParts(path: string): {
   // Remove the #heading
   path = path.replace(/(#.*)$/, '')
 
-  // Make sure that the path ends with '.md'
   return {
     path: app.metadataCache.getFirstLinkpathDest(
       getLinkpath(path),

@@ -119,10 +119,11 @@ function getLinkParts(path: string): {
   path = path.replace(/(#.*)$/, '')
 
   return {
-    path: app.metadataCache.getFirstLinkpathDest(
-      getLinkpath(path),
-      app.workspace.getActiveFile()?.path
-    ).path,
+    path:
+      app.metadataCache.getFirstLinkpathDest(
+        getLinkpath(path),
+        app.workspace.getActiveFile()?.path
+      )?.path ?? path,
     heading,
     block,
   }

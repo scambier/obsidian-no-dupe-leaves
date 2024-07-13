@@ -3,6 +3,7 @@ import {
   OpenViewState,
   PaneType,
   Plugin,
+  TFile,
   Workspace,
   getLinkpath,
 } from 'obsidian'
@@ -118,12 +119,18 @@ function getLinkParts(path: string): {
   // Remove the #heading
   path = path.replace(/(#.*)$/, '')
 
+  let file: TFile | null
+  try {
+    file = app.metadataCache.getFirstLinkpathDest(
+      getLinkpath(path),
+      app.workspace.getActiveFile()?.path
+    )
+  } catch (e) {
+    file = null
+  }
+
   return {
-    path:
-      app.metadataCache.getFirstLinkpathDest(
-        getLinkpath(path),
-        app.workspace.getActiveFile()?.path
-      )?.path ?? path,
+    path: file?.path ?? path,
     heading,
     block,
   }

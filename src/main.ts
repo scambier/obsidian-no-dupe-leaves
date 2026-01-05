@@ -5,11 +5,13 @@ import {
   Plugin,
   TFile,
   Workspace,
+  WorkspaceLeaf,
   getLinkpath,
 } from 'obsidian'
 import { around } from 'monkey-around'
 
 let uninstallPatchOpen: () => void
+let uninstallPatchOpenFile: () => void
 
 export default class NoDupeLeavesPlugin extends Plugin {
   async onload(): Promise<void> {
@@ -39,18 +41,31 @@ export default class NoDupeLeavesPlugin extends Plugin {
           const parts = getLinkParts(linktext)
 
           let result = false
-          // Check all open panes for a matching path
-          app.workspace.iterateAllLeaves(leaf => {
+          let foundLeaf: WorkspaceLeaf | null = null
+          let foundPinnedLeaf: WorkspaceLeaf | null = null
+
+          // Check all open panes for a matching path, prioritizing pinned tabs
+          app.workspace.iterateAllLeaves((leaf: WorkspaceLeaf) => {
             const viewState = leaf.getViewState()
             if (
               viewState.type === 'markdown' &&
               viewState.state?.file === parts.path
             ) {
-              // Found a corresponding pane
-              app.workspace.setActiveLeaf(leaf, { focus: true })
-              result = true
+              if (!foundLeaf) {
+                foundLeaf = leaf
+              }
+              if ((leaf as any).pinned && !foundPinnedLeaf) {
+                foundPinnedLeaf = leaf
+              }
             }
           })
+
+          // Navigate to pinned tab if found, otherwise use first match
+          const targetLeaf = foundPinnedLeaf || foundLeaf
+          if (targetLeaf) {
+            app.workspace.setActiveLeaf(targetLeaf, { focus: true })
+            result = true
+          }
           // If no pane matches the path, call the original function
           if (!result) {
             result =
@@ -67,10 +82,60 @@ export default class NoDupeLeavesPlugin extends Plugin {
         }
       },
     })
+
+    // Patch WorkspaceLeaf.prototype.openFile for direct file opens
+    uninstallPatchOpenFile = around(WorkspaceLeaf.prototype, {
+      openFile(oldOpenFile) {
+        return async function (file: TFile, openState?: OpenViewState) {
+          let foundLeaf: WorkspaceLeaf | null = null
+          let foundPinnedLeaf: WorkspaceLeaf | null = null
+
+          app.workspace.iterateAllLeaves((leaf: WorkspaceLeaf) => {
+            // Skip the current leaf
+            if (leaf === this) return
+
+            const viewState = leaf.getViewState()
+            if (
+              viewState.type === 'markdown' &&
+              viewState.state?.file === file?.path
+            ) {
+              const isPinned = (leaf as any).pinned
+              // Prioritize pinned tabs by checking them first
+              if (isPinned) {
+                if (!foundPinnedLeaf) {
+                  foundPinnedLeaf = leaf
+                }
+              } else {
+                if (!foundLeaf) {
+                  foundLeaf = leaf
+                }
+              }
+            }
+          })
+
+          const targetLeaf = foundPinnedLeaf || foundLeaf
+          if (targetLeaf) {
+            app.workspace.setActiveLeaf(targetLeaf, { focus: true })
+
+            // Delay detach to let navigation complete first
+            const currentLeaf = this as WorkspaceLeaf
+            const currentViewState = currentLeaf.getViewState()
+            if (!currentViewState.state?.file) {
+              setTimeout(() => currentLeaf.detach(), 50)
+            }
+
+            return Promise.resolve()
+          }
+
+          return oldOpenFile && oldOpenFile.apply(this, [file, openState])
+        }
+      }
+    })
   }
 
   onunload(): void {
     uninstallPatchOpen()
+    uninstallPatchOpenFile()
   }
 }
 
